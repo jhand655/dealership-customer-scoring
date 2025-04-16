@@ -51,9 +51,11 @@ time_at_residence = st.number_input("Time at Residence (years)", min_value=0.0, 
 prev_job_time = st.number_input("Time at Previous Job (years)", min_value=0.0, max_value=50.0, value=2.0)
 
 prev_repossession = st.radio("Previous Repossessions?", ("No", "Yes"))
-num_repos = 0
+
 if prev_repossession == "Yes":
     num_repos = st.slider("How many?", 1, 5, 1)
+else:
+    num_repos = 0
 
 has_checking_account = st.radio("Do you have a checking account?", ("Yes", "No"))
 
