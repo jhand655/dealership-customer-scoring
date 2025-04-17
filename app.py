@@ -12,7 +12,7 @@ def score_customer(
     income_norm = normalize(income, 19200, 100000)
     residence_time_norm = normalize(time_at_residence, 0, 3)
     prev_job_time_norm = normalize(time_at_prev_job, 0, 3)
-    down_payment_norm = normalize(down_payment, 1000, 10000)
+    down_payment_norm = normalize(down_payment, 1000, 7000)
 
     # Stronger job stability logic
     if time_at_job >= 2:
