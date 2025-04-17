@@ -40,7 +40,7 @@ def score_customer(
         down_payment_norm * 0.20 +
         prev_job_time_norm * 0.05 +
         checking_bonus +
-        (-repo_penalty) * 0.45
+        (-repo_penalty) * 1.0
     )
 
     return round(max(0, min(final_score, 100)), 2)
