@@ -10,8 +10,8 @@ def score_customer(
 ):
     credit_score_norm = normalize(credit_score, 400, 680)
     income_norm = normalize(income, 24000, 75000)
-    residence_time_norm = normalize(time_at_residence, 0, 3)
     prev_job_time_norm = normalize(time_at_prev_job, 0, 3)
+    residence_time_norm = normalize(time_at_residence, 0, 3)
     down_payment_norm = normalize(down_payment, 1500, 7000)
 
     # Stronger job stability logic
