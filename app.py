@@ -8,10 +8,10 @@ def score_customer(
     prev_repossession, num_repos, time_at_prev_job,
     has_checking_account, down_payment
 ):
-    credit_score_norm = normalize(credit_score, 300, 850)
-    income_norm = normalize(income, 19200, 80000)
-    residence_time_norm = normalize(time_at_residence, 0, 10)
-    prev_job_time_norm = normalize(time_at_prev_job, 0, 10)
+    credit_score_norm = normalize(credit_score, 400, 700)
+    income_norm = normalize(income, 19200, 60000)
+    residence_time_norm = normalize(time_at_residence, 0, 7)
+    prev_job_time_norm = normalize(time_at_prev_job, 0, 7)
     down_payment_norm = normalize(down_payment, 1500, 10000)
 
     # Stronger job stability logic
@@ -49,8 +49,8 @@ def score_customer(
 st.set_page_config(page_title="Customer Scoring App", layout="centered")
 st.title("🏁 Dealership Customer Scoring")
 
-credit_score = st.number_input("Credit Score", 300, 850, value=580)
-income = st.number_input("Annual Income ($)", 19200, 200000, value=40000)
+credit_score = st.number_input("Credit Score", 400, 700, value=580)
+income = st.number_input("Annual Income ($)", 19200, 60000, value=40000)
 time_at_job = st.number_input("Time at Current Job (years)", 0.0, 50.0, value=1.0)
 time_at_residence = st.number_input("Time at Residence (years)", 0.0, 50.0, value=2.0)
 prev_job_time = st.number_input("Time at Previous Job (years)", 0.0, 50.0, value=3.0)
