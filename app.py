@@ -8,11 +8,11 @@ def score_customer(
     prev_repossession, num_repos, time_at_prev_job,
     has_checking_account, down_payment
 ):
-    credit_score_norm = normalize(credit_score, 400, 700)
+    credit_score_norm = normalize(credit_score, 350, 680)
     income_norm = normalize(income, 19200, 100000)
     residence_time_norm = normalize(time_at_residence, 0, 3)
     prev_job_time_norm = normalize(time_at_prev_job, 0, 3)
-    down_payment_norm = normalize(down_payment, 1500, 10000)
+    down_payment_norm = normalize(down_payment, 1000, 10000)
 
     # Stronger job stability logic
     if time_at_job >= 2:
@@ -49,12 +49,12 @@ def score_customer(
 st.set_page_config(page_title="Customer Scoring App", layout="centered")
 st.title("🏁 Dealership Customer Scoring")
 
-credit_score = st.number_input("Credit Score", 400, 700, value=560)
+credit_score = st.number_input("Credit Score", 350, 800, value=560)
 income = st.number_input("Annual Income ($)", 19200, 200000, value=36000)
 time_at_job = st.number_input("Time at Current Job (years)", 0.0, 50.0, value=1.0)
 time_at_residence = st.number_input("Time at Residence (years)", 0.0, 50.0, value=1.0)
 prev_job_time = st.number_input("Time at Previous Job (years)", 0.0, 50.0, value=2.0)
-down_payment = st.number_input("Down Payment Amount ($)", 1500, 10000, value=1500)
+down_payment = st.number_input("Down Payment Amount ($)", 1000, 10000, value=1500)
 
 prev_repossession = st.radio("Previous Repossessions?", ("No", "Yes"))
 num_repos = st.slider("How many repossessions?", 1, 3, 1) if prev_repossession == "Yes" else 0
