@@ -9,7 +9,7 @@ def score_customer(
     has_checking_account, down_payment
 ):
     credit_score_norm = normalize(credit_score, 350, 680)
-    income_norm = normalize(income, 19200, 100000)
+    income_norm = normalize(income, 24000, 80000)
     residence_time_norm = normalize(time_at_residence, 0, 3)
     prev_job_time_norm = normalize(time_at_prev_job, 0, 3)
     down_payment_norm = normalize(down_payment, 1000, 7000)
