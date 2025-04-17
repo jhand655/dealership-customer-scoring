@@ -34,7 +34,7 @@ def score_customer(
 
     # Adjusted scoring formula
     final_score = (
-        credit_score_norm * 0.20 +
+        credit_score_norm * 0.30 +
         income_job_score * 0.35 +
         residence_time_norm * 0.10 +
         down_payment_norm * 0.20 +
