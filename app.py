@@ -28,7 +28,7 @@ def score_customer(
     if prev_repossession == "Yes":
         repo_penalty = 10 if num_repos == 1 else 25
     else:
-        repo_penalty = 10
+        repo_penalty = 0
 
     checking_bonus = 10 if has_checking_account == "Yes" else 0
 
@@ -50,7 +50,7 @@ st.set_page_config(page_title="Customer Scoring App", layout="centered")
 st.title("🏁 Dealership Customer Scoring")
 
 credit_score = st.number_input("Credit Score", 400, 700, value=560)
-income = st.number_input("Annual Income ($)", 19200, 60000, value=36000)
+income = st.number_input("Annual Income ($)", 19200, 200000, value=36000)
 time_at_job = st.number_input("Time at Current Job (years)", 0.0, 50.0, value=1.0)
 time_at_residence = st.number_input("Time at Residence (years)", 0.0, 50.0, value=1.0)
 prev_job_time = st.number_input("Time at Previous Job (years)", 0.0, 50.0, value=2.0)
