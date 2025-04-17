@@ -34,11 +34,11 @@ def score_customer(
 
     # Adjusted scoring formula
     final_score = (
-        credit_score_norm * 0.30 +
+        credit_score_norm * 0.35 +
         income_job_score * 0.35 +
-        residence_time_norm * 0.10 +
+        residence_time_norm * 0.20 +
         down_payment_norm * 0.30 +
-        prev_job_time_norm * 0.15 +
+        prev_job_time_norm * 0.25 +
         checking_bonus +
         (-repo_penalty) * 0.8
     )
