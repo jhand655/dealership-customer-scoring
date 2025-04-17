@@ -40,7 +40,7 @@ def score_customer(
         down_payment_norm * 0.20 +
         prev_job_time_norm * 0.05 +
         checking_bonus +
-        (-repo_penalty) * 0.20
+        (-repo_penalty) * 0.05
     )
 
     return round(max(0, min(final_score, 100)), 2)
@@ -57,7 +57,7 @@ prev_job_time = st.number_input("Time at Previous Job (years)", 0.0, 50.0, value
 down_payment = st.number_input("Down Payment Amount ($)", 1500, 10000, value=1500)
 
 prev_repossession = st.radio("Previous Repossessions?", ("No", "Yes"))
-num_repos = st.slider("How many repossessions?", 1, 5, 1) if prev_repossession == "Yes" else 10
+num_repos = st.slider("How many repossessions?", 1, 5, 1) if prev_repossession == "Yes" else 0
 has_checking_account = st.radio("Do you have a checking account?", ("Yes", "No"))
 
 if st.button("Calculate Score"):
