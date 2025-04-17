@@ -8,11 +8,11 @@ def score_customer(
     prev_repossession, num_repos, time_at_prev_job,
     has_checking_account, down_payment
 ):
-    credit_score_norm = normalize(credit_score, 350, 680)
-    income_norm = normalize(income, 24000, 80000)
+    credit_score_norm = normalize(credit_score, 400, 680)
+    income_norm = normalize(income, 24000, 75000)
     residence_time_norm = normalize(time_at_residence, 0, 3)
     prev_job_time_norm = normalize(time_at_prev_job, 0, 3)
-    down_payment_norm = normalize(down_payment, 1000, 7000)
+    down_payment_norm = normalize(down_payment, 1500, 7000)
 
     # Stronger job stability logic
     if time_at_job >= 2:
@@ -37,8 +37,8 @@ def score_customer(
         credit_score_norm * 0.30 +
         income_job_score * 0.35 +
         residence_time_norm * 0.10 +
-        down_payment_norm * 0.20 +
-        prev_job_time_norm * 0.05 +
+        down_payment_norm * 0.30 +
+        prev_job_time_norm * 0.15 +
         checking_bonus +
         (-repo_penalty) * 0.8
     )
