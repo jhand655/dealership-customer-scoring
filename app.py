@@ -8,22 +8,24 @@ def score_customer(
     prev_repossession, num_repos, time_at_prev_job,
     has_checking_account, down_payment
 ):
-    credit_score_norm = normalize(credit_score, 300, 850)
-    income_norm = normalize(income, 19200, 200000)
-    residence_time_norm = normalize(time_at_residence, 0, 30)
-    prev_job_time_norm = normalize(time_at_prev_job, 0, 30)
-    down_payment_norm = normalize(down_payment, 1000, 10000)
+    # Adjusted scaling to boost mid-range values
+    credit_score_norm = normalize(credit_score, 300, 850) * 1.1  # Boost credit slightly
+    income_norm = normalize(income, 19200, 100000)  # Cap at $100K so avg income (~40-50k) scores better
+    residence_time_norm = normalize(time_at_residence, 0, 20)
+    prev_job_time_norm = normalize(time_at_prev_job, 0, 20)
+    down_payment_norm = normalize(down_payment, 1000, 10000) * 1.25  # Boost effect of avg down payments
 
     # Job time logic
     if time_at_job >= 2:
         job_time_score = 100
     elif time_at_job < 1 and time_at_prev_job >= 2:
-        job_time_score = 80
+        job_time_score = 85
     else:
-        job_time_score = normalize(time_at_job, 0, 2) * 0.7 + prev_job_time_norm * 0.3
+        job_time_score = normalize(time_at_job, 0, 2) * 0.6 + prev_job_time_norm * 0.4
 
     income_job_score = (income_norm * 0.5 + job_time_score * 0.5)
 
+    # Original repo penalty retained
     if prev_repossession == "Yes":
         repo_penalty = 10 if num_repos == 1 else 25
     else:
@@ -66,9 +68,11 @@ if st.button("Calculate Score"):
     )
 
     st.subheader(f"Customer Score: **{score}/100**")
-    if score >= 80:
-        st.success("High Quality Lead ✅")
+    if score >= 85:
+        st.success("Excellent Lead ✅")
+    elif score >= 75:
+        st.info("Good Lead 👍")
     elif score >= 60:
-        st.info("Moderate Quality Lead ⚠️")
+        st.warning("Moderate Lead ⚠️")
     else:
-        st.warning("Low Quality Lead ❌")
+        st.error("Low Quality Lead ❌")
