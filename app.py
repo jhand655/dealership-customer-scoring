@@ -8,24 +8,23 @@ def score_customer(
     prev_repossession, num_repos, time_at_prev_job,
     has_checking_account, down_payment
 ):
-    # New normalization to match "average" with 60-70+
     credit_score_norm = normalize(credit_score, 300, 850)
-    income_norm = normalize(income, 19200, 60000)  # Narrowed top to $60K
-    residence_time_norm = normalize(time_at_residence, 0, 10)  # Average residence ~2-5 years
+    income_norm = normalize(income, 19200, 80000)
+    residence_time_norm = normalize(time_at_residence, 0, 10)
     prev_job_time_norm = normalize(time_at_prev_job, 0, 10)
-    down_payment_norm = normalize(down_payment, 1000, 5000)  # Most avg down payments in $1K–$5K
+    down_payment_norm = normalize(down_payment, 1500, 10000)
 
-    # Job time logic
+    # Stronger job stability logic
     if time_at_job >= 2:
         job_time_score = 100
     elif time_at_job < 1 and time_at_prev_job >= 2:
-        job_time_score = 85
+        job_time_score = 90
     else:
-        job_time_score = normalize(time_at_job, 0, 2) * 0.5 + prev_job_time_norm * 0.5
+        job_time_score = normalize(time_at_job, 0, 2) * 0.3 + prev_job_time_norm * 0.7
 
-    income_job_score = (income_norm * 0.5 + job_time_score * 0.5)
+    income_job_score = (income_norm * 0.35 + job_time_score * 0.65)
 
-    # Original repo penalty retained
+    # Repossession penalty
     if prev_repossession == "Yes":
         repo_penalty = 10 if num_repos == 1 else 25
     else:
@@ -33,12 +32,12 @@ def score_customer(
 
     checking_bonus = 10 if has_checking_account == "Yes" else 0
 
-    # Weighted scoring
+    # Adjusted scoring formula
     final_score = (
-        credit_score_norm * 0.30 +
-        income_job_score * 0.30 +
-        residence_time_norm * 0.15 +
-        down_payment_norm * 0.15 +
+        credit_score_norm * 0.20 +
+        income_job_score * 0.35 +
+        residence_time_norm * 0.10 +
+        down_payment_norm * 0.20 +
         prev_job_time_norm * 0.05 +
         checking_bonus +
         (-repo_penalty) * 0.05
@@ -46,7 +45,7 @@ def score_customer(
 
     return round(max(0, min(final_score, 100)), 2)
 
-# Streamlit UI
+# Streamlit App UI
 st.set_page_config(page_title="Customer Scoring App", layout="centered")
 st.title("🏁 Dealership Customer Scoring")
 
@@ -55,7 +54,7 @@ income = st.number_input("Annual Income ($)", 19200, 200000, value=40000)
 time_at_job = st.number_input("Time at Current Job (years)", 0.0, 50.0, value=1.0)
 time_at_residence = st.number_input("Time at Residence (years)", 0.0, 50.0, value=2.0)
 prev_job_time = st.number_input("Time at Previous Job (years)", 0.0, 50.0, value=3.0)
-down_payment = st.number_input("Down Payment Amount ($)", 1000, 10000, value=2500)
+down_payment = st.number_input("Down Payment Amount ($)", 1500, 10000, value=2500)
 
 prev_repossession = st.radio("Previous Repossessions?", ("No", "Yes"))
 num_repos = st.slider("How many repossessions?", 1, 5, 1) if prev_repossession == "Yes" else 0
