@@ -28,7 +28,7 @@ def score_customer(
     if prev_repossession == "Yes":
         repo_penalty = 10 if num_repos == 1 else 25
     else:
-        repo_penalty = 0
+        repo_penalty = 10
 
     checking_bonus = 10 if has_checking_account == "Yes" else 0
 
