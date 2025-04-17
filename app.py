@@ -57,7 +57,7 @@ prev_job_time = st.number_input("Time at Previous Job (years)", 0.0, 50.0, value
 down_payment = st.number_input("Down Payment Amount ($)", 1500, 10000, value=1500)
 
 prev_repossession = st.radio("Previous Repossessions?", ("No", "Yes"))
-num_repos = st.slider("How many repossessions?", 1, 5, 1) if prev_repossession == "Yes" else 0
+num_repos = st.slider("How many repossessions?", 1, 5, 1) if prev_repossession == "Yes" else 10
 has_checking_account = st.radio("Do you have a checking account?", ("Yes", "No"))
 
 if st.button("Calculate Score"):
