@@ -45,3 +45,35 @@ def score_customer(
     )
 
     return round(max(0, min(final_score, 100)), 2)
+
+# Streamlit UI
+st.set_page_config(page_title="Customer Scoring App", layout="centered")
+st.title("🏁 Dealership Customer Scoring")
+
+credit_score = st.number_input("Credit Score", 300, 850, value=580)
+income = st.number_input("Annual Income ($)", 19200, 200000, value=40000)
+time_at_job = st.number_input("Time at Current Job (years)", 0.0, 50.0, value=1.0)
+time_at_residence = st.number_input("Time at Residence (years)", 0.0, 50.0, value=2.0)
+prev_job_time = st.number_input("Time at Previous Job (years)", 0.0, 50.0, value=3.0)
+down_payment = st.number_input("Down Payment Amount ($)", 1000, 10000, value=2500)
+
+prev_repossession = st.radio("Previous Repossessions?", ("No", "Yes"))
+num_repos = st.slider("How many repossessions?", 1, 5, 1) if prev_repossession == "Yes" else 0
+has_checking_account = st.radio("Do you have a checking account?", ("Yes", "No"))
+
+if st.button("Calculate Score"):
+    score = score_customer(
+        credit_score, income, time_at_job, time_at_residence,
+        prev_repossession, num_repos, prev_job_time,
+        has_checking_account, down_payment
+    )
+
+    st.subheader(f"Customer Score: **{score}/100**")
+    if score >= 85:
+        st.success("Excellent Lead ✅")
+    elif score >= 75:
+        st.info("Good Lead 👍")
+    elif score >= 60:
+        st.warning("Moderate Lead ⚠️")
+    else:
+        st.error("Low Quality Lead ❌")
